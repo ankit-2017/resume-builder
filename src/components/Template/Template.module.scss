@@ -1,0 +1,42 @@
+.leftSection {
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-size: 48px;
+    font-weight: bolder;
+    width: 80%;
+
+    span {
+      color: #8a2be2;
+    }
+  }
+}
+
+.rightSection {
+  height: 85vh;
+  width: 100%;
+  display: flex;
+}
+
+.imgContainer {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  img {
+    width: 260px;
+    height: 360px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    transition: all 0.5s ease-in;
+  }
+
+  img:hover {
+    transform: scale(1.2);
+  }
+}

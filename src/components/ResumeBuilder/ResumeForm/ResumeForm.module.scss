@@ -1,0 +1,15 @@
+.contactDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+
+.additionalDetails {
+  margin-top: 10px;
+}
+
+.additionalForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}

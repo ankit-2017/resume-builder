@@ -1,0 +1,46 @@
+.mainContainer {
+  // background-color: azure;
+  padding: 20px 10px 20px 10px;
+}
+
+.leftSection {
+  img {
+    width: 200px;
+    height: 50px;
+  }
+  @media (max-width: 768px) {
+    img {
+      width: 150px;
+      height: 50px;
+    }
+  }
+
+  @media (max-width: 375px) {
+    img {
+      width: 100px;
+      height: 40px;
+    }
+  }
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  height: 100%;
+  ul {
+    padding: 0;
+    margin: 0;
+    display: flex;
+
+    li {
+      list-style-type: none;
+      margin-left: 20px;
+    }
+
+    button {
+      color: #8a2be2;
+      border-color: #8a2be2;
+    }
+  }
+}
