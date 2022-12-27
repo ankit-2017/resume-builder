@@ -13,3 +13,13 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
 }
+
+.formSection {
+  overflow: auto;
+  max-height: 100vh;
+  border: 2px solid lightgray;
+  border-radius: 5px;
+}
+.innerFormSection {
+  padding: 10px 10px
+}

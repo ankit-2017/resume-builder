@@ -81,10 +81,14 @@
 
 .education {
   margin-top: 1rem;
-  div:nth-child(2) {
+  .educationInnerDiv {
+    margin-bottom: 0.5rem;
     display: flex;
     justify-content: space-between;
   }
+  // div:nth-child(2) {
+    
+  // }
 }
 
 .skills {

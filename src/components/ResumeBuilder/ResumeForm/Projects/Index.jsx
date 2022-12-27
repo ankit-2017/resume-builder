@@ -1,54 +1,47 @@
 /* eslint-disable */
-import { Field, FieldArray } from 'formik';
+import { Field, FieldArray } from 'formik'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { TextInput } from 'components/common/Form';
+import TextInput from 'components/common/Form/TextInput';
+import TextArea from 'components/common/Form/TextArea';
 import Button from 'components/common/Button';
-import Styles from './Education.module.scss';
+import Styles from './Index.module.scss';
 
-const Education = ({ values, handleChange }) => (
+const ProjectInfo = ({
+  values, handleChange, companyData
+}) => (
   <div>
     <FieldArray
-      name="education"
+      name="projects"
       render={({ remove, push }) => (
-        <>
+        <div>
           {
-            values.education.length > 0
-            && values.education.map((item, index) => (
+            values.projects.length > 0
+            && values.projects.map((item, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <div key={index} className={Styles.container}>
                 <div>
                   <Field
                     type="text"
-                    label="University/School"
-                    placeholder="Enter university or school name"
-                    name={`education.${index}.name`}
-                    onChange={handleChange}
+                    label="Project Name"
+                    placeholder="Project Name"
+                    name={`projects.${index}.name`}
                     component={TextInput}
+                    onChange={handleChange}
                   />
-                  <div className={Styles.innerContainer}>
-                    <Field
-                      type="text"
-                      label="Degree"
-                      placeholder="ex: Bachelor of Arts"
-                      name={`education.${index}.degree`}
-                      onChange={handleChange}
-                      component={TextInput}
-                    />
-                    <Field
-                      type="text"
-                      label="Duration"
-                      placeholder="ex: July 2000-May 2003"
-                      name={`education.${index}.duration`}
-                      onChange={handleChange}
-                      component={TextInput}
-                    />
-                  </div>
+                  <TextArea
+                    rows={2}
+                    label="Project Description"
+                    placeholder="Add brief description of project."
+                    name={`projects.${index}.description`}
+                    onChange={handleChange}
+                  />
                 </div>
                 {
                   item.initial ? (
                     <div>
                       <div
-                        onClick={() => push({ name: '', degree: '', duration: '', initial: false })}
+                        onClick={() => push({ name: '', description: '', initial: false })}
                         className={Styles.addSection}
                       >
                         <div className={Styles.iconContainer}>
@@ -75,15 +68,15 @@ const Education = ({ values, handleChange }) => (
           {/* <div>
             <Button
               Icon={AddCircleOutlineIcon}
-              text="Add Education"
-              onClickHandler={() => push({ name: '', degree: '', duration: '' })}
+              text="Add Projects"
+              onClickHandler={() => push({ name: '', description: '' })}
               variant="success"
             />
           </div> */}
-        </>
+        </div>
       )}
     />
   </div>
 );
 
-export default Education;
+export default ProjectInfo;

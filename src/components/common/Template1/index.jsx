@@ -1,29 +1,39 @@
+/* eslint-disable */
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PropTypes from 'prop-types';
 import ProgressBar from '../ProgressBar';
 import Styles from './index.module.scss';
 import Text from '../Text';
 
-const Template1 = () => (
-  <div className={Styles.container}>
+const Template1 = ({ props }) => {
+  console.log('props', props)
+  const {firstName, lastName, email, contactNo, designation, country, city, address,
+    professionalSummary, employementHistory, education, skills, projects} = props
+    
+  return<div className={Styles.container}>
     <div className={Styles.personalDetails}>
       <div className={Styles.leftSection}>
-        <h1>Jacab Johns</h1>
-        <p>Software Engineer</p>
+        <h1>
+          {firstName || 'Jacob Johns'}
+          {' '}
+          {lastName}
+        </h1>
+        <p>{designation || 'Designation'}</p>
       </div>
 
       <div className={Styles.rightSection}>
         <div>
-          <Text content="1234567890" fontSize="15px" />
+          <Text content={contactNo || 'Contact No.'} fontSize="15px" />
           <PhoneIcon />
         </div>
         <div>
-          <Text content="youremail@example.com" fontSize="15px" />
+          <Text content={email || 'Email'} fontSize="15px" />
           <EmailIcon />
         </div>
         <div>
-          <Text content="A-164, west coast, 3rd street, London-11111" fontSize="15px" />
+          <Text content={`${address} ${city} ${country || 'Location'}`} fontSize="15px" />
           <LocationOnIcon />
         </div>
       </div>
@@ -35,7 +45,7 @@ const Template1 = () => (
       <div className={Styles.summary}>
         <h3>Professional Summary</h3>
       </div>
-      <Text content="lorem lorem lorem lorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem loremlorem lorem lorem" fontSize="14px" />
+      <Text content={professionalSummary || 'Your professional summary'} fontSize="14px" />
     </div>
 
     {/** Education */}
@@ -43,13 +53,19 @@ const Template1 = () => (
       <div className={Styles.companyHeading}>
         <h3>Education</h3>
       </div>
-      <div>
-        <h4>Boston University, London</h4>
-        <Text content="aug 2012 - July 2015" />
-      </div>
-      <div>
-        <Text content="Bachelors of computer science" fontSize="15px" />
-      </div>
+      {
+        education?.map((item) => (
+          <div className={Styles.educationInnerDiv}>
+            <div>
+              <h4>{item?.name || 'Boston University, London'}</h4>
+              <Text content={item?.degree || 'Bachelors of computer science'} />
+            </div>
+            <div>
+              <Text content={item?.duration || 'Aug 2003 - May 2007'} fontSize="15px" />
+            </div>
+          </div>
+        ))
+      }
     </div>
 
     {/** Skills */}
@@ -57,49 +73,22 @@ const Template1 = () => (
       <div className={Styles.companyHeading}>
         <h3>Skills</h3>
       </div>
-      <div>
-        <ul>
-          <li>
-            <div>
-              <p>Skill 1</p>
-              <div>
-                <ProgressBar percentage={20} />
-              </div>
-
-            </div>
-          </li>
-          <li>
-            <div>
-              <p>Skill 2</p>
-              <ProgressBar percentage={50} />
-            </div>
-          </li>
-          <li>
-            <div>
-              <p>Skill 3</p>
-              <ProgressBar percentage={100} />
-            </div>
-          </li>
-          <li>
-            <div>
-              <p>Skill 4</p>
-              <ProgressBar percentage={60} />
-            </div>
-          </li>
-          <li>
-            <div>
-              <p>Skill 5</p>
-              <ProgressBar percentage={30} />
-            </div>
-          </li>
-          <li>
-            <div>
-              <p>Skill 6</p>
-              <ProgressBar percentage={30} />
-            </div>
-          </li>
-        </ul>
-      </div>
+        <div>
+            <ul>
+                {
+                  skills?.map(item => (
+                        <li>
+                          <div>
+                            <p>{item?.name || 'Skill name'}</p>
+                            <div>
+                              <ProgressBar percentage={item?.level} />
+                            </div>
+                          </div>
+                        </li>
+                  ))
+                }
+            </ul>
+        </div>
     </div>
 
     {/** Experiance */}
@@ -198,6 +187,17 @@ const Template1 = () => (
       </div>
     </div>
   </div>
-);
+};
+
+Template1.defaultProps = {
+  personalDetailsValues: {},
+  professionalSummary: '',
+};
+
+Template1.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  personalDetailsValues: PropTypes.object,
+  professionalSummary: PropTypes.string,
+};
 
 export default Template1;

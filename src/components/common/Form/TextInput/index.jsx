@@ -1,15 +1,15 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable */
 import PropTypes from 'prop-types';
 import Styles from './index.module.scss';
 
 export const Index = ({
-  label, validationText, error, ...rest
+  field, form: { touched, errors }, label, validationText, error, ...rest
 }) => (
   <div className={Styles.container}>
     { label && <span>{label}</span> }
-    <input {...rest} />
+    <input {...field} {...rest} />
     {
-      error && <span>{validationText}</span>
+      touched[field.name] && errors[field.name] && <span>{errors[field.name]}</span>
     }
   </div>
 );

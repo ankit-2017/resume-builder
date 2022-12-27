@@ -1,13 +1,18 @@
+@import 'Styles/color.scss';
 .container {
   display: grid;
   grid-template-columns: 95% 5%;
   column-gap: 0px;
 }
 
-.innerContainer {
+.inlineDiv {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
+  // margin: 10px 0;
+  // border: 2px solid $themeColorRegular;
+  // border-radius: 5px;
+  // padding: 10px;
 }
 
 .iconContainer {
@@ -32,7 +37,7 @@
 }
 
 .deleteSection {
-  background-color: #fe020266;
+  background-color: #ff000078;
   height: 90%;
   margin-top: 50%;
   border: 1px solid transparent;
@@ -44,3 +49,4 @@
     box-shadow: inset 5em 1em #ff000078;
   }
 }
+

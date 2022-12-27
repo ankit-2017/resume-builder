@@ -1,5 +1,46 @@
 .container {
   display: grid;
+  grid-template-columns: 95% 5%;
+  column-gap: 0px;
+}
+
+.inlineDiv {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
+}
+
+.iconContainer {
+  height: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.addSection {
+  background-color: #008000b4;
+  height: 90%;
+  margin-top: 50%;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  transition: all 0.5s ease-in;
+  
+  &:hover {
+    // border: 1px solid green;
+    box-shadow: inset 5em 1em #008000b4;
+  }
+}
+
+.deleteSection {
+  background-color: #ff000078;
+  height: 90%;
+  margin-top: 50%;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  transition: all 0.5s ease-in;
+
+  &:hover {
+    // border: 1px solid red;
+    box-shadow: inset 5em 1em #ff000078;
+  }
 }

@@ -1,69 +1,87 @@
-/* eslint-disable react/prop-types */
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+/* eslint-disable */
+import { Field, FieldArray } from 'formik';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import TextInput from 'components/common/Form/TextInput';
-import { uniqueId } from 'utils';
+import Projects from '../Projects/Index';
 import ToggleSection from 'components/common/ToggleSection';
-import ProjectInfo from '../ProjectInfo';
-import RenderNodes from '../RenderNodes';
 import Styles from './EmployementHistory.module.scss';
-import { addNode, removeNode, getProjectNodes } from '../../ResumeBuilder.slice';
 
-const EmployementHistory = ({ id }) => {
-  const dispatch = useDispatch();
-  const projectElement = (
-    <ProjectInfo
-      id={uniqueId()}
-      key={uniqueId()}
+const EmployementHistory = ({ values, handleChange }) => (
+  <div>
+    <FieldArray
+      name="employementHistory"
+      render={({ remove, push }) => (
+        <div>
+          {
+              values.employementHistory.length > 0
+              && values.employementHistory.map((item, index) => (
+                <div key={index} className={Styles.container}>
+                  <div>
+                    <Field
+                      type="text"
+                      label="Company"
+                      placeholder="Company Name"
+                      name={`employementHistory.${index}.companyName`}
+                      component={TextInput}
+                      onChange={handleChange}
+                    />
+                    <div className={Styles.inlineDiv}>
+                      <Field
+                        type="text"
+                        label="Job Title"
+                        placeholder="Job Title"
+                        name={`employementHistory.${index}.jobTitle`}
+                        component={TextInput}
+                        onChange={handleChange}
+                      />
+                      <Field
+                        type="text"
+                        label="Duration"
+                        placeholder="ex: aug 2004 - june 2006"
+                        name={`employementHistory.${index}.duration`}
+                        component={TextInput}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <ToggleSection
+                      buttonText="projects"
+                      buttonVariant="text"
+                    >
+                      <Projects values={values} handleChange={handleChange} companyData={item} />
+                    </ToggleSection>
+                  </div>
+                  {
+                    item.initial ? (
+                      <div>
+                        <div
+                          onClick={() => push({ companyName: '', jobTitle: '', duration: '', initial: false })}
+                          className={Styles.addSection}
+                        >
+                          <div className={Styles.iconContainer}>
+                            <AddCircleOutlineIcon color="white" />
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div>
+                        <div
+                          onClick={() => remove(index)}
+                          className={Styles.deleteSection}
+                        >
+                          <div className={Styles.iconContainer}>
+                            <RemoveCircleOutlineIcon color="white" />
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                </div>
+              ))
+          }
+        </div>
+      )}
     />
-  );
-  let projectNodes = useSelector((state) => getProjectNodes(state, id));
-  projectNodes = projectNodes?.projects || [];
-  useEffect(() => {
-    if (!projectNodes.length) {
-      dispatch(addNode({ parentId: 'project', baseNode: projectElement, companyId: id }));
-    }
-  }, [projectNodes]);
-
-  return (
-    <div>
-      <TextInput
-        type="text"
-        label="Company"
-        placeholder="Company Name"
-        name="company1"
-      />
-      <div className={Styles.inlineDiv}>
-        <TextInput
-          type="text"
-          label="Job Title"
-          placeholder="Job Title"
-          name="job_title"
-        />
-        <TextInput
-          type="text"
-          label="Duration"
-          placeholder="ex: aug 2004 - june 2006"
-          name="duration"
-        />
-      </div>
-      <div>
-        <ToggleSection
-          buttonText="projects"
-          buttonVariant="text"
-        >
-          <RenderNodes
-            nodeStack={projectNodes}
-            addNodeHandler={addNode}
-            removeNodeHandler={removeNode}
-            baseNode={projectElement}
-            parentId="project"
-            companyId={id}
-          />
-        </ToggleSection>
-      </div>
-    </div>
-  );
-};
-
+  </div>
+);
 export default EmployementHistory;
