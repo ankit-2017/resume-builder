@@ -3,55 +3,41 @@ import { Field, FieldArray } from 'formik';
 import { TextInput, SelectInput } from 'components/common/Form';
 import { uniqueId } from 'utils';
 import RenderModifySection from '../RenderModifySection'
-import Styles from './skills.module.scss';
+import Styles from './Index.module.scss';
 
 const optionsArray = [{
-  name: '100%',
-  value: '100',
+  name: 'Native',
+  value: 'Native',
   id: uniqueId(),
 }, {
-  name: '80%',
-  value: '80',
+  name: 'Proficient',
+  value: 'Proficient',
   id: uniqueId(),
 }, {
-  name: '60%',
-  value: '60',
-  id: uniqueId(),
-},{
-  name: '40%',
-  value: '40',
-  id: uniqueId(),
-},{
-  name: '20%',
-  value: '20',
-  id: uniqueId(),
-},{
-  name: '10%',
-  value: '10',
+  name: 'Intermediate',
+  value: 'Intermediate',
   id: uniqueId(),
 }];
-const Skills = ({ values, handleChange }) => (
+const Language = ({ values, handleChange }) => (
   <>
     <FieldArray
-      name="skills"
+      name="languages"
       render={({ remove, push }) => (
         <>
           {
-            values.skills.length > 0
-            && values.skills.map((item, index) => (
+            values.languages.length > 0
+            && values.languages.map((item, index) => (
               <div key={index} className={Styles.container}>
                 <div className={Styles.inlineDiv}>
                   <Field
                     type="text"
-                    // label="Name"
-                    placeholder="ex: React, Javascript"
-                    name={`skills.${index}.name`}
+                    placeholder="ex: English"
+                    name={`languages.${index}.name`}
                     component={TextInput}
                     onChange={handleChange}
                   />
                   <SelectInput
-                    // label="Level percentage"
-                    name={`skills.${index}.level`}
+                    name={`languages.${index}.level`}
                     optionsArray={optionsArray}
                     onChange={handleChange}
                   />
@@ -70,4 +56,4 @@ const Skills = ({ values, handleChange }) => (
   </>
 );
 
-export default Skills;
+export default Language;

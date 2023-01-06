@@ -1,14 +1,12 @@
 /* eslint-disable */
-import { Field, FieldArray } from 'formik'
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { Field, FieldArray} from 'formik'
+import RenderModifySection from '../RenderModifySection'
 import TextInput from 'components/common/Form/TextInput';
 import TextArea from 'components/common/Form/TextArea';
-import Button from 'components/common/Button';
 import Styles from './Index.module.scss';
 
 const ProjectInfo = ({
-  values, handleChange, companyData
+  values, handleChange, companyItem
 }) => (
   <div>
     <FieldArray
@@ -17,13 +15,14 @@ const ProjectInfo = ({
         <div>
           {
             values.projects.length > 0
-            && values.projects.map((item, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <div key={index} className={Styles.container}>
+            && values.projects.map((item, index) => {
+              if (item.id === companyItem.id) {
+                // eslint-disable-next-line react/no-array-index-key
+                return(<div key={index} className={Styles.container}>
                 <div>
                   <Field
                     type="text"
-                    label="Project Name"
+                    // label="Project Name"
                     placeholder="Project Name"
                     name={`projects.${index}.name`}
                     component={TextInput}
@@ -31,52 +30,27 @@ const ProjectInfo = ({
                   />
                   <TextArea
                     rows={2}
-                    label="Project Description"
-                    placeholder="Add brief description of project."
+                    // label="Project Description"
+                    placeholder="Add main highlights of project."
                     name={`projects.${index}.description`}
                     onChange={handleChange}
                   />
                 </div>
-                {
-                  item.initial ? (
-                    <div>
-                      <div
-                        onClick={() => push({ name: '', description: '', initial: false })}
-                        className={Styles.addSection}
-                      >
-                        <div className={Styles.iconContainer}>
-                          <AddCircleOutlineIcon color="white" />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div
-                        onClick={() => remove(index)}
-                        className={Styles.deleteSection}
-                      >
-                        <div className={Styles.iconContainer}>
-                          <RemoveCircleOutlineIcon color="white" />
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
-              </div>
-            ))
+                <RenderModifySection
+                  item={item}
+                  push={() => push({ name: '', description: '', initial: false, id: companyItem.id })}
+                  remove={() => remove(index)}
+                  index={index}
+                />
+
+                </div>)
+              }
+            })
           }
-          {/* <div>
-            <Button
-              Icon={AddCircleOutlineIcon}
-              text="Add Projects"
-              onClickHandler={() => push({ name: '', description: '' })}
-              variant="success"
-            />
-          </div> */}
         </div>
       )}
     />
   </div>
-);
+  )
 
 export default ProjectInfo;

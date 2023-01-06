@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import Styles from './index.module.scss';
 
 const HeadingGroup = ({
   HeadingLevel, headingText, subHeadingText,
 }) => (
-  <div style={{ lineHeight: 1.5 }}>
+  <div className={Styles.container}>
     <HeadingLevel>{headingText}</HeadingLevel>
-    <p style={{ color: 'GrayText', fontSize: '13px', fontWeight: '600' }}>{subHeadingText}</p>
+    <p className={Styles.subHeadingText}>{subHeadingText}</p>
   </div>
 );
 

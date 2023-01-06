@@ -1,12 +1,33 @@
+$mobile: 425px;
+$tablet: 768px;
+
 .mainContainer {
-  // background-color: azure;
-  padding: 20px 10px 20px 10px;
+  display: grid;
+  grid-template-rows: 1fr;
+  padding: 10px 10px;
+  grid-template-columns: 1fr 2fr;
+
+  @media screen and (max-width: $tablet) {
+    grid-template-columns: 1fr;
+  }
+
 }
 
-.leftSection {
+.leftNavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   img {
     width: 200px;
     height: 50px;
+  }
+  .menuIcon {
+    display: none;
+    font-size: 30px;
+
+    @media screen and (max-width: $tablet) {
+      display: block;
+    }
   }
   @media (max-width: 768px) {
     img {
@@ -23,11 +44,47 @@
   }
 }
 
-.rightSection {
+.responsiveNavbar {
+  display: block;
+  z-index: 9999;
+  position: relative;
+  .menuIcon {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  ul {
+    width: 90vw;
+    background-color: rgb(247, 247, 247);
+    border-radius: 5px;
+    position: absolute;
+    // top: 50%;
+    padding: 10px;
+    margin: 0;
+
+    li {
+      list-style-type: none;
+      padding: 5px 0;
+    }
+    a {
+      font-size: 12px;
+      text-decoration: none;
+      color: #8a2be2;
+    }
+  }
+
+  @media screen and (min-width: ($tablet + 1)) {
+    display: none;
+  }
+}
+
+.rightNavbar {
   display: flex;
   align-items: center;
   justify-content: end;
   height: 100%;
+
   ul {
     padding: 0;
     margin: 0;
@@ -37,10 +94,15 @@
       list-style-type: none;
       margin-left: 20px;
     }
-
-    button {
+    
+    a {
+      text-decoration: none;
       color: #8a2be2;
-      border-color: #8a2be2;
+    }
+
+    @media screen and (max-width: $tablet) {
+      display: none;
     }
   }
+  
 }

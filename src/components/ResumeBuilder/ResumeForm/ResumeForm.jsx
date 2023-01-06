@@ -1,19 +1,22 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable */
-import { Form, FieldArray, Formik, Field } from 'formik';
-import { Grid, Divider } from '@mui/material';
+import { Form, Formik, Field } from 'formik';
+import { Grid } from '@mui/material';
 import TextInput from 'components/common/Form/TextInput';
 import TextArea from 'components/common/Form/TextArea';
 import ToggleSection from 'components/common/ToggleSection';
 import HeadingGroup from 'components/common/HeadingGroup';
-// import { uniqueId } from 'utils';
-// import { useEffect, useState } from 'react';
 import Button from 'components/common/Button';
 import EmployementHistory from './EmployementHistory/EmployementHostory';
 import Styles from './ResumeForm.module.scss';
 import Education from './Education';
 import Skills from './Skills';
+import Language from './Language/Index';
+import { uniqueId } from 'utils';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
 
 const initialValues = {
   firstName: '',
@@ -27,19 +30,14 @@ const initialValues = {
   professionalSummary: '',
   employementHistory: [
     {
+      id: uniqueId(),
       companyName: '',
       jobTitle: '',
       duration: '',
       initial: true
     },
   ],
-  projects: [
-    {
-      name: '',
-      description: '',
-      initial: true
-    }
-  ],
+  projects: [],
   education: [
     {
       name: '',
@@ -54,11 +52,27 @@ const initialValues = {
       level: '',
       initial: true
     }
+  ],
+  languages: [
+    {
+      name: '',
+      level: '',
+      initial: true
+    }
   ]
 }
 
-// eslint-disable-next-line react/prop-types
 const ResumeForm = ({ Template }) => {
+  const generatePDF = () => {
+    const input = document.getElementById('template')
+    html2canvas(input)
+    .then((canvas) => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF("p", "pt", "a4")
+      pdf.addImage(imgData, 'PNG', 80, 50)
+      pdf.save('new-resume.pdf')
+    })
+  }
   return (
         <div>
           <Formik
@@ -73,56 +87,50 @@ const ResumeForm = ({ Template }) => {
                   <Grid item xs={12} md={6} lg={6}>
                     <div className={Styles.formSection}>
                       <div className={Styles.innerFormSection}>
-                        <h3>Personal Details</h3>
+                        <HeadingGroup
+                          HeadingLevel="h3"
+                          headingText="Personal Details"
+                          subHeadingText="Add your demographic details."
+                        />
                         <div className={Styles.contactDiv}>
                           <Field
                             type="text"
-                            label="First Name"
                             placeholder="First Name"
                             name="firstName"
                             component={TextInput}
-                            // value={values.firstName}
                             onChange={handleChange}
                           />
 
                           <Field
                             type="text"
-                            label="Last Name"
                             placeholder="Last Name"
                             name="lastName"
                             component={TextInput}
-                            // value={values.lastName}
                             onChange={handleChange}
                           />
 
                           <Field
                             type="email"
-                            label="Email"
                             placeholder="Email"
                             name="email"
                             component={TextInput}
-                            // value={values.email}
                             onChange={handleChange}
                           />
 
                           <Field
                             type="text"
-                            label="Contact Number"
                             placeholder="Contact Number"
                             name="contactNo"
                             component={TextInput}
-                            // value={values.contactNo}
                             onChange={handleChange}
                           />
                         </div>
 
                         <Field
                           type="text"
-                          label="Designation"
                           placeholder="Designation"
                           name="designation"
                           component={TextInput}
-                          // value={values.designation}
                           onChange={handleChange}
                         />
                         <div className={Styles.additionalDetails}>
@@ -133,7 +141,6 @@ const ResumeForm = ({ Template }) => {
                             <div className={Styles.additionalForm}>
                               <Field
                                 type="text"
-                                label="Country"
                                 placeholder="Country"
                                 name="country"
                                 component={TextInput}
@@ -141,7 +148,6 @@ const ResumeForm = ({ Template }) => {
                               />
                               <Field
                                 type="text"
-                                label="City"
                                 placeholder="City"
                                 name="city"
                                 component={TextInput}
@@ -150,8 +156,7 @@ const ResumeForm = ({ Template }) => {
                             </div>
                             <TextArea
                               rows={2}
-                              label="Address"
-                              placeholder="Enter address"
+                              placeholder="Enter your current address"
                               name="address"
                               value={values.address}
                               onChange={handleChange}
@@ -167,7 +172,6 @@ const ResumeForm = ({ Template }) => {
                           />
                           <TextArea
                             rows={2}
-                            label="Professional Summary"
                             placeholder="Add your professional summary"
                             name="professionalSummary"
                             value={values.professionalSummary}
@@ -201,15 +205,28 @@ const ResumeForm = ({ Template }) => {
                           />
                           <Skills values={values} handleChange={handleChange} />
                         </div>
+                        {/** Languages */}
+                        <div>
+                          <HeadingGroup
+                            HeadingLevel="h3"
+                            headingText="Languages"
+                            subHeadingText="Add languages that you know."
+                          />
+                          <Language values={values} handleChange={handleChange} />
+                        </div>
+                        <div>
+                          <Button
+                            variant="outlined"
+                            type="submit"
+                            text="Proceed"
+                            onClickHandler={() => generatePDF(values)} 
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <Button variant="outlined" type="submit" text="Proceed" />
                     </div>
                   </Grid>
                   <Grid item xs={12} md={6} lg={6}>
-                    <div>
-                      <Divider orientation="vertical" />
+                    <div id='template'>
                       {Template && <Template props={values} />}
                     </div>
                   </Grid>

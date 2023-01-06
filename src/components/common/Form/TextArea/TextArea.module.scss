@@ -1,4 +1,5 @@
 @import 'Styles/color.scss';
+$mobile: 425px;
 
 .container {
   line-height: 2;
@@ -9,10 +10,16 @@
   textarea {
     border: 2px solid transparent;
     background-color: $themeColorLite;
-    padding: 10px 15px;
+    padding: 10px 10px;
     color: black;
-    font-size: 16px;
+    font-size: 14px;
     border-bottom: 2px solid $themeColor;
+
+    @media screen and (max-width: $mobile) {
+      font-size: 11px;
+      padding: 5px 7.5px;
+      border-bottom: 1px solid $themeColor;
+    }
 
     &:focus {
       outline: none;

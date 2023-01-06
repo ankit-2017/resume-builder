@@ -5,6 +5,8 @@
   padding: 2rem 1rem;
   border: 2px solid lightgrey;
   border-radius: 5px;
+  // overflow: auto;
+  // max-height: 100vh;
 }
 
 .personalDetails {
@@ -121,5 +123,6 @@
     width: 40%;
     display: flex;
     justify-content: space-between;
+    padding: 2.5px 5px;
   }
 }

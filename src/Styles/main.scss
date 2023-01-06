@@ -1,3 +1,6 @@
+$mobile: 425px;
+$tablet: 768px;
+$laptop: 1024px;
 * {
     font-family:'Alef', sans-serif;
     padding: 0;
@@ -10,4 +13,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
     width: 80%;
     margin: auto;
+
+    @media screen and (max-width: $mobile) {
+        width: 98%;
+    }
+
+    @media screen and (max-width: $tablet) {
+        width: 90%;
+    }
+
+    @media screen and (max-width: $laptop) {
+        width: 95%;
+    }
   }

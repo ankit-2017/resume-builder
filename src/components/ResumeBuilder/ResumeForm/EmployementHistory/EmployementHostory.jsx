@@ -1,14 +1,24 @@
 /* eslint-disable */
 import { Field, FieldArray } from 'formik';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { useState } from 'react';
 import TextInput from 'components/common/Form/TextInput';
 import Projects from '../Projects/Index';
 import ToggleSection from 'components/common/ToggleSection';
+import RenderModifySection from '../RenderModifySection'
 import Styles from './EmployementHistory.module.scss';
+import { uniqueId } from 'utils';
+import { useEffect } from 'react';
 
-const EmployementHistory = ({ values, handleChange }) => (
-  <div>
+const EmployementHistory = ({ values, handleChange }) => {
+  const [shouldAddProject, setShouldAddProject] = useState(true)
+  useEffect(() => {
+    const { projects, employementHistory } = values
+    if ( shouldAddProject && values.projects.length <= 1) {
+      projects.push({ name: '',description: '', id: employementHistory[0].id, initial: true })
+      setShouldAddProject(false)
+    }
+  }, [])
+  return<div>
     <FieldArray
       name="employementHistory"
       render={({ remove, push }) => (
@@ -20,7 +30,7 @@ const EmployementHistory = ({ values, handleChange }) => (
                   <div>
                     <Field
                       type="text"
-                      label="Company"
+                      // label="Company"
                       placeholder="Company Name"
                       name={`employementHistory.${index}.companyName`}
                       component={TextInput}
@@ -29,7 +39,7 @@ const EmployementHistory = ({ values, handleChange }) => (
                     <div className={Styles.inlineDiv}>
                       <Field
                         type="text"
-                        label="Job Title"
+                        // label="Job Title"
                         placeholder="Job Title"
                         name={`employementHistory.${index}.jobTitle`}
                         component={TextInput}
@@ -37,7 +47,7 @@ const EmployementHistory = ({ values, handleChange }) => (
                       />
                       <Field
                         type="text"
-                        label="Duration"
+                        // label="Duration"
                         placeholder="ex: aug 2004 - june 2006"
                         name={`employementHistory.${index}.duration`}
                         component={TextInput}
@@ -48,34 +58,24 @@ const EmployementHistory = ({ values, handleChange }) => (
                       buttonText="projects"
                       buttonVariant="text"
                     >
-                      <Projects values={values} handleChange={handleChange} companyData={item} />
+                      <Projects values={values} companyItem={item} handleChange={handleChange} />
                     </ToggleSection>
                   </div>
-                  {
-                    item.initial ? (
-                      <div>
-                        <div
-                          onClick={() => push({ companyName: '', jobTitle: '', duration: '', initial: false })}
-                          className={Styles.addSection}
-                        >
-                          <div className={Styles.iconContainer}>
-                            <AddCircleOutlineIcon color="white" />
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <div>
-                        <div
-                          onClick={() => remove(index)}
-                          className={Styles.deleteSection}
-                        >
-                          <div className={Styles.iconContainer}>
-                            <RemoveCircleOutlineIcon color="white" />
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  }
+                  <RenderModifySection
+                    item={item}
+                    push={() => {
+                      const id = uniqueId()
+                      push({ companyName: '', jobTitle: '', duration: '', initial: false, id}
+                      )
+                      values.projects.push({ name: '',description: '', id, initial: true })
+                    }}
+                    remove={() => {
+                      remove(index)
+                      values.projects.forEach((ele, index) => {
+                        if(ele.id === item.id) values.projects.splice(index, 1)
+                      })
+                    }}
+                  />
                 </div>
               ))
           }
@@ -83,5 +83,5 @@ const EmployementHistory = ({ values, handleChange }) => (
       )}
     />
   </div>
-);
+};
 export default EmployementHistory;

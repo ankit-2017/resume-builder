@@ -1,0 +1,23 @@
+$mobile: 425px;
+
+.container {
+  line-height: 1.5;
+  margin-top: 1rem;
+  @media screen and (max-width: $mobile) {
+    line-height: 1.2;
+    h3 {
+      font-size: 13px;
+    }
+  }
+}
+
+.subHeadingText {
+  color: gray;
+  font-size: 13px;
+  font-weight: 600;
+
+  @media screen and (max-width: $mobile) {
+    font-size: 10px;
+    font-weight: 300;
+  }
+}

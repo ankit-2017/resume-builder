@@ -1,9 +1,3 @@
-// professional summary
-.container {
-  display: grid;
-  grid-template-columns: 95% 5%;
-  column-gap: 0px;
-}
 .iconContainer {
   height: 100%;
   margin: auto;
@@ -13,28 +7,26 @@
 }
 .addSection {
   background-color: #008000b4;
-  height: 90%;
-  margin-top: 50%;
-  border: 1px solid transparent;
+  height: 85%;
+  margin-top: 20%;
+  border: 1px solid lightgray;
   border-radius: 3px;
   transition: all 0.5s ease-in;
   
   &:hover {
-    // border: 1px solid green;
     box-shadow: inset 5em 1em #008000b4;
   }
 }
 
 .deleteSection {
   background-color: #ff000078;
-  height: 90%;
-  margin-top: 50%;
+  height: 85%;
+  margin-top: 20%;
   border: 1px solid transparent;
   border-radius: 3px;
   transition: all 0.5s ease-in;
 
   &:hover {
-    // border: 1px solid red;
     box-shadow: inset 5em 1em #ff000078;
   }
 }

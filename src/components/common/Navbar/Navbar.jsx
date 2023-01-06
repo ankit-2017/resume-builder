@@ -1,37 +1,41 @@
-import { Grid, Button } from '@mui/material';
+/* eslint-disable */
 import { useHistory } from 'react-router-dom';
+import { useState } from 'react'
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import Logo from 'assets/images/githubLogo2.png';
 import Styles from './Navbar.module.scss';
 
 const Navbar = () => {
   const router = useHistory();
+  const [navbarClass, setNavbarClass] = useState(false)
   return (
     <div className={Styles.mainContainer}>
-      <Grid container spacing={0}>
-        <Grid item xs={4}>
-          <div className={Styles.leftSection}>
-            <img src={Logo} alt="logo" />
-          </div>
-        </Grid>
-        <Grid item xs={8}>
-          <div className={Styles.rightSection}>
-            <ul>
-              <li>
-                <Button variant="outlined" onClick={() => router.goBack()}>Back</Button>
-              </li>
-              <li>
-                <Button variant="text">Resume Templates</Button>
-              </li>
-              <li>
-                <Button variant="text">ENGLISH</Button>
-              </li>
-              <li>
-                <Button variant="outlined">Login</Button>
-              </li>
-            </ul>
-          </div>
-        </Grid>
-      </Grid>
+      <div className={Styles.leftNavbar}>
+          <img src={Logo} alt="logo" />
+          {
+            navbarClass 
+            ? <CloseIcon className={Styles.menuIcon} onClick={() => setNavbarClass(false)} />
+            : <MenuIcon className={Styles.menuIcon} onClick={() => setNavbarClass(true)} />
+          }
+          
+      </div>
+      <div className={ navbarClass? Styles.responsiveNavbar: Styles.rightNavbar}>
+        <ul>
+          <li>
+            <a href="#" onClick={() => router.goBack()} >Back</a>
+          </li>
+          <li>
+            <a href="#">Templates</a>
+          </li>
+          <li>
+            <a href="#">Languages</a>
+          </li>
+          <li>
+            <a href="#">Login</a>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

@@ -8,10 +8,9 @@ import Styles from './index.module.scss';
 import Text from '../Text';
 
 const Template1 = ({ props }) => {
-  console.log('props', props)
   const {firstName, lastName, email, contactNo, designation, country, city, address,
-    professionalSummary, employementHistory, education, skills, projects} = props
-    
+    professionalSummary, employementHistory, education, skills, projects, languages} = props
+
   return<div className={Styles.container}>
     <div className={Styles.personalDetails}>
       <div className={Styles.leftSection}>
@@ -46,6 +45,45 @@ const Template1 = ({ props }) => {
         <h3>Professional Summary</h3>
       </div>
       <Text content={professionalSummary || 'Your professional summary'} fontSize="14px" />
+    </div>
+
+    {/** Experiance */}
+    <div className={Styles.employementHistory}>
+      <div className={Styles.companyHeading}>
+        <h3>Employement History</h3>
+      </div>
+      {
+        employementHistory.map((item, index) => (
+          <div className={Styles.companyItem}>
+            <div className={Styles.companyName}>
+              <h4>{item?.companyName}</h4>
+              <Text content={item?.duration} />
+            </div>
+            <Text content={item?.jobTitle} fontSize="15px" />
+            <div className={Styles.projectsInfo}>
+              <ul>
+                {
+                  projects.map(projectItem => {
+                    if (projectItem.id === item.id) {
+                      return(<li>
+                        <Text
+                          content={projectItem.name}
+                          fontSize="13px"
+                          fontWeight="bold"
+                        >
+                          <span style={{ fontSize: '13px', fontWeight: 'lighter' }}>
+                            {projectItem.description}
+                          </span>
+                        </Text>
+                      </li>)
+                    }
+                  })
+                }
+              </ul>
+            </div>
+          </div>
+        ))
+      }
     </div>
 
     {/** Education */}
@@ -91,99 +129,20 @@ const Template1 = ({ props }) => {
         </div>
     </div>
 
-    {/** Experiance */}
-    <div className={Styles.employementHistory}>
-      <div className={Styles.companyHeading}>
-        <h3>Employement History</h3>
-      </div>
-      <div className={Styles.companyItem}>
-        <div className={Styles.companyName}>
-          <h4>Company Name</h4>
-          <Text content="Aug 2015- July 2020" />
-        </div>
-        <Text content="Software Developer" fontSize="15px" />
-        <div className={Styles.projectsInfo}>
-          <ul>
-            <li>
-              <Text
-                content="Project Title:"
-                fontSize="13px"
-                fontWeight="bold"
-              >
-                <span style={{ fontSize: '13px', fontWeight: 'lighter' }}>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing
-                  elit.Repellendus a,
-                </span>
-              </Text>
-            </li>
-            <li>
-              <Text
-                content="Project Title:"
-                fontSize="13px"
-                fontWeight="bold"
-              >
-                <span style={{ fontSize: '13px', fontWeight: 'lighter' }}>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing
-                  elit.Repellendus a, consectetur adipisicing
-                  elit.Repellendus a,
-                </span>
-              </Text>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className={Styles.companyItem}>
-        <div className={Styles.companyName}>
-          <h4>Company Name</h4>
-          <Text content="Aug 2015- July 2020" />
-        </div>
-        <Text content="Software Developer" fontSize="15px" />
-        <div className={Styles.projectsInfo}>
-          <ul>
-            <li>
-              <Text
-                content="Project Title:"
-                fontSize="13px"
-                fontWeight="bold"
-              >
-                <span style={{ fontSize: '13px', fontWeight: 'lighter' }}>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing
-                  elit.Repellendus a,
-                </span>
-              </Text>
-            </li>
-            <li>
-              <Text
-                content="Project Title:"
-                fontSize="13px"
-                fontWeight="bold"
-              >
-                <span style={{ fontSize: '13px', fontWeight: 'lighter' }}>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing
-                  elit.Repellendus a, consectetur adipisicing
-                  elit.Repellendus a,
-                </span>
-              </Text>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
     {/** Languages */}
     <div className={Styles.languages}>
       <div className={Styles.companyHeading}>
         <h3>Languages</h3>
       </div>
       <div className={Styles.languageItems}>
-        <div>
-          <p>English</p>
-          <small>Proficient</small>
-        </div>
-        <div>
-          <p>Spanis</p>
-          <small>Expert</small>
-        </div>
+        {
+          languages.map(item => (
+            <div>
+              <p>{item.name}</p>
+              <small>{item.level}</small>
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@ import { Field, FieldArray } from 'formik';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { TextInput } from 'components/common/Form';
-import Button from 'components/common/Button';
+import RenderModifySection from '../RenderModifySection'
 import Styles from './Education.module.scss';
 
 const Education = ({ values, handleChange }) => (
@@ -19,8 +19,7 @@ const Education = ({ values, handleChange }) => (
                 <div>
                   <Field
                     type="text"
-                    label="University/School"
-                    placeholder="Enter university or school name"
+                    placeholder="Enter university or college name"
                     name={`education.${index}.name`}
                     onChange={handleChange}
                     component={TextInput}
@@ -28,7 +27,6 @@ const Education = ({ values, handleChange }) => (
                   <div className={Styles.innerContainer}>
                     <Field
                       type="text"
-                      label="Degree"
                       placeholder="ex: Bachelor of Arts"
                       name={`education.${index}.degree`}
                       onChange={handleChange}
@@ -36,7 +34,6 @@ const Education = ({ values, handleChange }) => (
                     />
                     <Field
                       type="text"
-                      label="Duration"
                       placeholder="ex: July 2000-May 2003"
                       name={`education.${index}.duration`}
                       onChange={handleChange}
@@ -44,31 +41,11 @@ const Education = ({ values, handleChange }) => (
                     />
                   </div>
                 </div>
-                {
-                  item.initial ? (
-                    <div>
-                      <div
-                        onClick={() => push({ name: '', degree: '', duration: '', initial: false })}
-                        className={Styles.addSection}
-                      >
-                        <div className={Styles.iconContainer}>
-                          <AddCircleOutlineIcon color="white" />
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div>
-                      <div
-                        onClick={() => remove(index)}
-                        className={Styles.deleteSection}
-                      >
-                        <div className={Styles.iconContainer}>
-                          <RemoveCircleOutlineIcon color="white" />
-                        </div>
-                      </div>
-                    </div>
-                  )
-                }
+                <RenderModifySection
+                  item={item}
+                  push={() => push({ name: '', degree: '', duration: '', initial: false })}
+                  remove={() => remove(index)}
+                />
               </div>
             ))
           }
